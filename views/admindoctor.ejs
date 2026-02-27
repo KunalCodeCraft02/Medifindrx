@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doctor Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f1f5f9;
+min-height:100vh;
+}
+
+/* HEADER */
+.header{
+background:#0f172a;
+color:white;
+padding:18px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+}
+
+.header h2{
+font-size:22px;
+}
+
+.logout{
+background:#ef4444;
+border:none;
+padding:10px 18px;
+border-radius:8px;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+/* CONTAINER */
+.container{
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
+}
+
+/* TITLE */
+.title{
+font-size:28px;
+font-weight:700;
+color:#0f172a;
+}
+
+.subtitle{
+color:#64748b;
+margin-top:5px;
+margin-bottom:30px;
+}
+
+/* CARD */
+.card{
+background:white;
+padding:25px;
+border-radius:16px;
+margin-bottom:18px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-3px);
+}
+
+/* ROW */
+.row{
+margin:8px 0;
+font-size:15px;
+color:#334155;
+}
+
+.row span{
+font-weight:600;
+color:#0f172a;
+}
+
+/* STATUS */
+.status{
+margin-top:10px;
+font-weight:700;
+}
+
+.pending{color:#f59e0b}
+.approved{color:#16a34a}
+.completed{color:#2563eb}
+
+/* BUTTON */
+.btn{
+margin-top:12px;
+padding:10px 18px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+color:white;
+}
+
+.approve{background:#16a34a}
+.verify{background:#2563eb}
+
+/* OTP BOX */
+.otp-box{
+display:flex;
+gap:10px;
+margin-top:10px;
+flex-wrap:wrap;
+}
+
+.otp-box input{
+padding:10px;
+border:1px solid #ddd;
+border-radius:8px;
+outline:none;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+.header{
+flex-direction:column;
+gap:10px;
+text-align:center;
+}
+
+.title{
+font-size:22px;
+}
+
+.container{
+padding:25px 15px;
+}
+
+.card{
+padding:18px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+<h2>Doctor Dashboard</h2>
+<a href="/doctorlogout"><button class="logout">Logout</button></a>
+</div>
+
+<div class="container">
+
+<h2 class="title">Welcome Dr. <%= doctor.name %></h2>
+<p class="subtitle">Manage your patient appointments</p>
+
+<% if(appointments.length===0){ %>
+<p>No appointments yet</p>
+<% } %>
+
+<% appointments.forEach(a=>{ %>
+
+<div class="card">
+
+<div class="row"><span>Patient:</span> <%=a.userName%></div>
+<div class="row"><span>Email:</span> <%=a.userEmail%></div>
+<div class="row"><span>Problem:</span> <%=a.problem%></div>
+<div class="row"><span>Date:</span> <%=a.date%></div>
+<div class="row"><span>Time:</span> <%=a.time%></div>
+
+<div class="status 
+<%= a.completed ? 'completed' : a.status==='approved' ? 'approved' : 'pending' %>">
+Status: <%= a.completed ? 'Completed' : a.status %>
+</div>
+
+<!-- APPROVE -->
+<% if(a.status==="pending"){ %>
+<a href="/doctor/approve/<%=a._id%>">
+<button class="btn approve">Approve Appointment</button>
+</a>
+<% } %>
+
+<!-- OTP VERIFY -->
+<% if(a.status==="approved" && !a.completed){ %>
+<form action="/verify-doctor-otp" method="POST" class="otp-box">
+<input type="hidden" name="id" value="<%=a._id%>">
+<input name="otp" placeholder="Enter OTP" required>
+<button class="btn verify">Verify OTP</button>
+</form>
+<% } %>
+
+<!-- COMPLETED -->
+<% if(a.completed){ %>
+<div class="status completed">✔ Appointment Completed</div>
+<% } %>
+
+</div>
+
+<% }) %>
+
+</div>
+</body>
+</html>

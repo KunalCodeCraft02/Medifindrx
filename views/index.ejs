@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <title>MedifindRx</title>
+    <link rel="shortcut icon" href="/images/medifindrx logo.png" type="image/x-icon">
+</head>
+
+<body>
+    <div id="fixed"></div>
+
+    <main>
+
+        <div id="page1">
+            <nav>
+                <div class="logon">
+                    <img src="/images/medifindrx logo.png" alt="">
+                </div>
+                <div class="links">
+                    <a href="#page3">About</a>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" id="trackDropdown">
+                            Services
+                        </a>
+                    </div>
+                    <a href="">Contact</a>
+                    <a href="">Help</a>
+                </div>
+                <div class="btns">
+
+                    <a href="/signinas"><button>Signin <i class="ri-user-fill"></i></button></a>
+                    <a href="/loginas"><button>Login <i class="ri-arrow-right-fill"></i></button></a>
+                </div>
+                <i class="ri-menu-line"></i>
+            </nav>
+            <header>
+
+                <div class="logo">
+                    <img src="/images/medifindrx logo.png">
+                </div>
+
+                <i class="ri-menu-3-line menu-btn" onclick="openMenu()"></i>
+
+            </header>
+
+
+            <!-- MENU OVERLAY -->
+            <div class="overlay" id="menuOverlay">
+
+                <div class="side-menu">
+
+                    <i class="ri-close-line close-btn" onclick="closeMenu()"></i>
+
+                    <h1>MediFindRx</h1>
+
+                    <a href="#">Home</a>
+                    <a href="/signin">Customer Signin</a>
+                    <a href="/login">Customer Login</a>
+                    <a href="/hospitalsignin">Hospital Signin</a>
+                    <a href="/hospitallogin">Hospital Login</a>
+                    <a href="/pharmacysignin">Pharmacy Signin</a>
+                    <a href="/pharmacylogin">Pharmacy Login</a>
+                    <a href="/docotorsignin">Doctor Signin</a>
+                    <a href="/doctorlogin">Doctor Login</a>
+                    <a href="#">Contact</a>
+                    <!-- <a href="#">Logout</a> -->
+
+                    <div class="bottom-line"></div>
+
+                </div>
+            </div>
+        </div>
+        <div id="page2">
+            <div class="text-div">
+                <div class="text">
+                    <h1>Welcome to your </h1>
+                    <h1>center of good health</h1>
+                   <button onclick="window.location='#searchmedicine'">Check Medicine <i class="ri-arrow-right-fill"></i></button>
+                </div>
+            </div>
+            <div class="image-div">
+                <img src="/images/heroimg.webp" alt="">
+            </div>
+        </div>
+
+         <div id="page3">
+            <div class="visiondiv">
+                <h1>What is <span>MediFindRx</span> ?
+                </h1>
+                <p>
+                    MediFindRx is a comprehensive digital healthcare platform designed to simplify and accelerate access
+                    to essential medical services. It connects patients with nearby pharmacies, hospitals, doctors, and
+                    emergency services through one unified system. Whether it is finding a specific medicine, checking
+                    real-time hospital bed availability, booking a doctor’s appointment, or requesting an ambulance
+                    during an emergency, MediFindRx ensures that users can access critical healthcare resources quickly
+                    and reliably.
+                    By integrating real-time data, secure verification systems, and instant notifications, MediFindRx
+                    eliminates uncertainty and reduces unnecessary delays. Patients no longer need to visit multiple
+                    locations to check medicine stock or worry about hospital capacity during urgent situations. The
+                    platform provides clarity, coordination, and confidence when every minute matters. MediFindRx
+                    transforms fragmented healthcare processes into a seamless digital experience — making healthcare
+                    more accessible, organized, and dependable.
+                </p>
+            </div>
+            <div class="visiondiv visiondiv2">
+                <h1>Our <span>Vision</span></h1>
+                <p>
+                    Our vision is to build a unified digital healthcare ecosystem that delivers fast, transparent, and
+                    reliable medical access anytime and anywhere. We aim to integrate pharmacies, hospitals, ambulances,
+                    and doctors into a single seamless platform that improves coordination and strengthens emergency
+                    response systems.
+                    MediFindRx strives to enhance transparency in medicine availability and hospital bed occupancy,
+                    reduce emergency response time through real-time communication, minimize unnecessary travel and
+                    waiting periods, and empower healthcare providers with smart digital tools for better resource
+                    management. Our long-term goal is to create a trusted healthcare network that improves patient
+                    outcomes and ensures efficient medical support across communities.
+                    At its core, MediFindRx is built on a simple belief: healthcare should be accessible, efficient, and
+                    dependable for everyone.
+                </p>
+            </div>
+        </div>
+        <section class="search-medicine">
+
+            <div class="head">
+                <h2>Search Medicine</h2>
+            </div>
+
+            <div class="searchbar">
+                <input id="medicineInput" type="text" placeholder="Enter medicine name">
+                <button onclick="showOptions()">Search <i class="ri-search-line"></i></button>
+            </div>
+
+            <!-- Pickup / Delivery Options -->
+            <div id="modeOptions" style="display:none; margin-top:15px; text-align:center;">
+                <button onclick="loadPharmacies('pickup')" class="mode-btn">
+                    Pickup
+                </button>
+
+                <button onclick="loadPharmacies('delivery')" class="mode-btn">
+                    Delivery
+                </button>
+            </div>
+
+            <!-- Results -->
+            <div id="results" class="results-container"></div>
+
+        </section>
+
+        <section class="how-it-works">
+            <div class="container">
+
+                <h2 class="section-title">Services</h2>
+                <p class="section-subtitle">
+                   Services designed to meet your healthcare needs with ease and convenience. From booking hospital beds to scheduling appointments
+                </p>
+
+            <div class="cards">
+
+
+                    <div class="card">
+                        <div class="step-circle">1</div>
+                        <h3>Book A Bed</h3>
+                        <p>
+                            Find and book hospital beds instantly near your location.
+                            Check ICU, general and special bed availability in real-time without visiting hospitals.
+                        </p>
+                        <button onclick="window.location='/showhospital'">Check </button>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="step-circle">2</div>
+                        <h3>Get Appointment</h3>
+                        <p>
+                            Book appointments with verified doctors in seconds.
+                            Choose specialist, check fees, and confirm your slot online easily.
+                        </p>
+                        <button onclick="window.location='/showdoctors'">Check </button>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="step-circle">3</div>
+                        <h3>Blood Test</h3>
+                        <p>
+                            Schedule lab tests from trusted diagnostic centers.
+                            Book home sample collection or visit nearby labs with instant confirmation.
+                        </p>
+                        <button>Check</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="step-circle">4</div>
+                        <h3>Get Ambulance</h3>
+                        <p>
+                            Get emergency ambulance support anytime, anywhere.
+                            Locate nearest ambulance and request instantly for quick medical response.
+                        </p>
+                        <button>Check</button>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </section>
+        <section class="impact">
+            <h1>Feature</h1>
+            <p class="subtitle">
+                Connecting patients with hospitals, doctors, and pharmacies in real-time for faster and smarter healthcare access.
+            </p>
+
+            <div class="impact-container">
+
+                <div class="impact-card">
+                    <h2>10+</h2>
+                    <p>Medical Specialties</p>
+                    <!-- <a href="#">View All Services →</a> -->
+                </div>
+
+                <div class="impact-card">
+                    <h2>120+</h2>
+                    <p>Healthcare Providers</p>
+                    <!-- <a href="#">Meet Our Providers →</a> -->
+                </div>
+
+                <div class="impact-card">
+                    <h2>41,000+</h2>
+                    <p>Patients Served Annually</p>
+                    <!-- <a href="#">Make an Appointment →</a> -->
+                </div>
+
+                <div class="impact-card">
+                    <h2>12</h2>
+                    <p>Community Locations</p>
+                    <!-- <a href="#">View All Locations →</a> -->
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="footer">
+
+            <!-- Top wave -->
+            <div class="footer-wave"></div>
+
+            <div class="footer-container">
+
+                <!-- Logo + Get Started -->
+                <div class="footer-col">
+                    <img src="/images/medifindrx logo.png" class="logo" alt="logo">
+
+                    <h3>GET STARTED</h3>
+                    <ul>
+                        <li>Book Appointment</li>
+                        <li>Bed Reservation</li>
+                        <li>Check Medicine</li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div class="footer-col">
+                    <h3>COMPANY</h3>
+                    <ul>
+                        <li>Contact</li>
+                        <li>News</li>
+                        <li>Careers</li>
+                    </ul>
+
+                    <h3 class="mt">LEGAL</h3>
+                    <ul>
+                        <li>Privacy Notice</li>
+                        <li>Terms of Use</li>
+                    </ul>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-col">
+                    <h3>QUICK LINKS</h3>
+                    <ul>
+                        <li>Home</li>
+                        <li>About</li>
+                        <li>Services</li>
+                        <li>Customers</li>
+                        <li>Reviews</li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="footer-col">
+                    <h3>LET'S CHAT</h3>
+                    <p>Have a support question?</p>
+                    <button class="btn">GET IN TOUCH</button>
+
+                    <h3 class="mt">YOU CALL US</h3>
+                    <p>+91 7385831850</p>
+                </div>
+
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="footer-bottom">
+                <p>©2025. | MediFindRx | All rights reserved.</p>
+
+                <div class="social">
+                    <span><i class="ri-linkedin-fill"></i></span>
+                    <span><i class="ri-telegram-2-fill"></i></span>
+                    <span><i class="ri-youtube-fill"></i></span>
+                    <span><i class="ri-instagram-line"></i></span>
+                </div>
+            </div>
+
+        </footer>
+
+
+    </main>
+
+
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        let selectedMode = "";
+
+        // show pickup/delivery buttons
+        function showOptions() {
+            const med = document.getElementById("medicineInput").value.trim();
+
+            if (med === "") {
+                alert("Enter medicine name");
+                return;
+            }
+
+            document.getElementById("modeOptions").style.display = "block";
+            document.getElementById("results").innerHTML = "";
+        }
+
+
+        // load pharmacy
+        function loadPharmacies(mode) {
+
+            selectedMode = mode;
+
+            document.getElementById("results").innerHTML =
+                "<h3>Finding nearby pharmacies...</h3>";
+
+            if (!navigator.geolocation) {
+                alert("Location not supported");
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(async function (pos) {
+
+                const userLat = pos.coords.latitude;
+                const userLng = pos.coords.longitude;
+
+                const res = await fetch("/get-pharmacy");
+                const pharmacies = await res.json();
+
+                showResults(pharmacies, userLat, userLng);
+
+            },
+                function () {
+                    alert("Please allow location access");
+                });
+
+        }
+
+
+        // show pharmacy cards
+        function showResults(pharmacies, userLat, userLng) {
+
+            const div = document.getElementById("results");
+            div.innerHTML = "";
+
+            if (pharmacies.length === 0) {
+                div.innerHTML = "<h3>No pharmacy registered</h3>";
+                return;
+            }
+
+            pharmacies.forEach(shop => {
+
+                //  IMPORTANT CHECK
+                if (!shop.lat || !shop.lng) {
+                    console.log("Location missing for:", shop.name);
+                    return;
+                }
+
+                const dist = getDistance(userLat, userLng, shop.lat, shop.lng).toFixed(2);
+
+                const mapLink =
+                    `https://www.google.com/maps/dir/?api=1&destination=${shop.lat},${shop.lng}&travelmode=driving`;
+
+                div.innerHTML += `
+<div class="medical-card" style="
+background:white;
+padding:18px;
+border-radius:12px;
+margin-bottom:15px;
+box-shadow:0 6px 18px rgba(0,0,0,0.1);
+">
+
+<h3>${shop.name}</h3>
+<p><i class="ri-map-pin-fill"></i> ${shop.address}</p>
+<p><i class="ri-phone-fill"></i> ${shop.phonenumber}</p>
+<p><b>Distance:</b> ${dist} km</p>
+
+<div style="display:flex;gap:10px;margin-top:10px;">
+
+<a href="${mapLink}" target="_blank">
+<button style="
+background:#111827;
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:8px;
+cursor:pointer;">
+Show Route
+</button>
+</a>
+
+<a href="/pickup?shop=${encodeURIComponent(shop.name)}&mode=${selectedMode}&lat=${shop.lat}&lng=${shop.lng}">
+<button style="
+background:#006451;
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:8px;
+cursor:pointer;">
+Select Store
+</button>
+</a>
+
+</div>
+</div>
+`;
+            });
+        }
+
+
+        // distance formula
+        function getDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+
+
+
+
+       
+
+
+
+        function openMenu() {
+            document.getElementById("menuOverlay").classList.add("active");
+        }
+
+        function closeMenu() {
+            document.getElementById("menuOverlay").classList.remove("active");
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>

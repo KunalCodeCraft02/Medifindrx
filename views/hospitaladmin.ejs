@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Admin Panel</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            height: 90px;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            color: white;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* PAGE */
+        .container {
+            padding: 40px 60px;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #0f172a;
+        }
+
+        /* CARD */
+        .request-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .user-name {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .info {
+            margin-top: 8px;
+            color: #6b7280;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        .pending {
+            color: #f59e0b;
+        }
+
+        .approved {
+            color: #22c55e;
+        }
+
+        .rejected {
+            color: #ef4444;
+        }
+
+        .btns {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .approve {
+            background: #22c55e;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .reject {
+            background: #ef4444;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .otp-box {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .otp-input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .verify-btn {
+            background: #2563eb;
+            border: none;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .success {
+            margin-top: 10px;
+            background: #dcfce7;
+            padding: 10px;
+            border-radius: 8px;
+            color: #16a34a;
+            font-weight: 700;
+        }
+
+        .empty {
+            text-align: center;
+            margin-top: 80px;
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        /* 📱 MOBILE RESPONSIVE */
+        @media(max-width:768px) {
+
+            .navbar {
+                padding: 15px;
+                height: auto;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 20px;
+            }
+
+            .request-card {
+                padding: 16px;
+            }
+
+            .user-name {
+                font-size: 18px;
+            }
+
+            .btns {
+                flex-direction: column;
+            }
+
+            .approve,
+            .reject {
+                width: 100%;
+            }
+
+            .otp-box {
+                flex-direction: column;
+            }
+
+            .verify-btn {
+                width: 100%;
+            }
+
+            .logout-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+
+        }
+
+      
+        @media(max-width:480px) {
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .nav-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .request-card {
+                padding: 14px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="logo">
+            Hospital Admin
+        </div>
+
+        <div class="nav-right">
+            <div>
+                <%= hospital.name %>
+            </div>
+
+            <a href="/logout">
+                <button class="logout-btn">
+                    Logout <i class="ri-logout-box-r-line"></i>
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="container">
+
+        <div class="title">Bed Booking Requests</div>
+
+        <% if(requests.length===0){ %>
+            <div class="empty">
+                <i class="ri-inbox-line" style="font-size:40px;"></i>
+                <p>No booking requests yet</p>
+            </div>
+            <% } %>
+
+                <% requests.forEach(function(req){ %>
+
+                    <div class="request-card">
+
+                        <div class="user-name">
+                            <%= req.userName %>
+                        </div>
+
+                        <div class="info">
+                            <div>Email: <%= req.userEmail %>
+                            </div>
+                            <div>Bed: <%= req.bedType %>
+                            </div>
+                        </div>
+
+                        <div class="status 
+<%= req.status==='approved'?'approved':'' %>
+<%= req.status==='rejected'?'rejected':'' %>
+<%= req.status==='pending'?'pending':'' %>">
+                            Status: <%= req.status %>
+                        </div>
+
+                        <!-- PENDING BUTTON -->
+                        <% if(req.status==="pending" ){ %>
+                            <div class="btns">
+
+                                <a href="/bed/approve/<%= req._id %>">
+                                    <button class="approve">Approve</button>
+                                </a>
+
+                                <a href="/bed/reject/<%= req._id %>">
+                                    <button class="reject">Reject</button>
+                                </a>
+
+                            </div>
+                            <% } %>
+
+                                <!-- OTP VERIFY -->
+                                <% if(req.status==="approved" && !req.completed){ %>
+
+                                    <form action="/verify-bed-otp" method="POST" class="otp-box">
+                                        <input type="hidden" name="bookingId" value="<%= req._id %>">
+                                        <input name="otp" class="otp-input" placeholder="Enter OTP" required>
+                                        <button class="verify-btn">Verify OTP</button>
+                                    </form>
+
+                                    <% } %>
+
+                                        <!-- COMPLETED -->
+                                        <% if(req.completed){ %>
+                                            <div class="success">
+                                                <i class="ri-checkbox-circle-fill"></i> Bed given successfully
+                                            </div>
+                                            <% } %>
+
+                    </div>
+
+                    <% }) %>
+
+    </div>
+</body>
+
+</html>

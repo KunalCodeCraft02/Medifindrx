@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Nearby Hospital Beds</title>
+
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet"/>
+
+<style>
+
+body{
+    margin:0;
+    background:#f4f6fb;
+    font-family:'Poppins',sans-serif;
+}
+
+/* heading */
+.header{
+    text-align:center;
+    font-size:34px;
+    font-weight:700;
+    margin-top:40px;
+}
+
+/* grid container */
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:50px auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
+    gap:30px;
+}
+
+/* hospital card */
+.hospital-card{
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 12px 30px rgba(0,0,0,0.08);
+    transition:.3s;
+    display:flex;
+    flex-direction:column;
+}
+
+.hospital-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 45px rgba(0,0,0,0.15);
+}
+
+/* square image */
+.hospital-img{
+    width:100%;
+    height:200px;
+    overflow:hidden;
+}
+
+.hospital-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* content */
+.card-body{
+    padding:22px;
+    text-align:center;
+}
+
+.hospital-name{
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.info{
+    font-size:14px;
+    color:#555;
+    margin-bottom:4px;
+}
+
+.distance{
+    font-weight:600;
+    margin:10px 0;
+}
+
+/* prices */
+.price-row{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:10px;
+}
+
+.price{
+    background:#f1f5f9;
+    padding:7px 14px;
+    border-radius:8px;
+    font-size:13px;
+}
+
+/* buttons */
+.btn-row{
+    margin-top:15px;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+}
+
+.route{
+    background:black;
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.book{
+    background:#0f9d58;
+    color:white;
+    border:none;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.route:hover{background:#111;}
+.book:hover{background:#0c7c45;}
+
+.loader{
+    text-align:center;
+    font-size:18px;
+    margin-top:40px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">Find Nearby Hospital Beds</div>
+
+<div class="container" id="hospitalResults">
+    <div class="loader">Detecting your location...</div>
+</div>
+
+<script>
+
+if(!navigator.geolocation){
+    alert("Please allow location");
+}
+
+navigator.geolocation.getCurrentPosition(async function(pos){
+
+    const userLat = pos.coords.latitude;
+    const userLng = pos.coords.longitude;
+
+    document.getElementById("hospitalResults").innerHTML="Finding nearby hospitals...";
+
+    const res = await fetch("/get-hospitals");
+    const hospitals = await res.json();
+
+    showHospitals(hospitals,userLat,userLng);
+
+});
+
+
+function showHospitals(hospitals,userLat,userLng){
+
+    const div=document.getElementById("hospitalResults");
+    div.innerHTML="";
+
+    if(hospitals.length===0){
+        div.innerHTML="<h2>No hospitals available</h2>";
+        return;
+    }
+
+    hospitals.forEach(h=>{
+
+        const dist=getDistance(userLat,userLng,h.lat,h.lng).toFixed(2);
+        const map=`https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lng}`;
+
+        div.innerHTML+=`
+
+        <div class="hospital-card">
+
+            <div class="hospital-img">
+                <img src="${h.hospitalimage}" alt="Hospital Image">
+            </div>
+
+            <div class="card-body">
+
+                <div class="hospital-name">${h.name}</div>
+
+                <div class="info">
+                    <i class="ri-map-pin-line"></i> ${h.address}
+                </div>
+
+                <div class="info">
+                    <i class="ri-phone-line"></i> ${h.phonenumber}
+                </div>
+
+                <div class="distance">
+                    Distance: ${dist} km
+                </div>
+
+                <div class="price-row">
+                    <div class="price">ICU ₹${h.icuPrice}/day</div>
+                    <div class="price">General ₹${h.generalPrice}/day</div>
+                    <div class="price">Special ₹${h.specialPrice}/day</div>
+                </div>
+
+                <div class="btn-row">
+                    <a href="${map}" target="_blank">
+                        <button class="route">Show Route</button>
+                    </a>
+
+                    <a href="/bookbed?hospital=${encodeURIComponent(h.name)}">
+                        <button class="book">Book Bed</button>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+        `;
+    });
+}
+
+
+function getDistance(lat1,lon1,lat2,lon2){
+    const R=6371;
+    const dLat=(lat2-lat1)*Math.PI/180;
+    const dLon=(lon2-lon1)*Math.PI/180;
+
+    const a=Math.sin(dLat/2)*Math.sin(dLat/2)+
+    Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*
+    Math.sin(dLon/2)*Math.sin(dLon/2);
+
+    const c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+    return R*c;
+}
+
+</script>
+
+</body>
+</html>

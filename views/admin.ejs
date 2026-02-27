@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditech Super Admin</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: #0f172a;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .header h2 {
+            font-weight: 600;
+        }
+
+        .logout {
+            background: #ef4444;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin: 40px 0 20px;
+            color: #0f172a;
+            border-left: 5px solid #3b82f6;
+            padding-left: 10px;
+        }
+
+        /* ===== CARD ===== */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px 30px;
+            margin-bottom: 18px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            transition: .3s;
+            flex-wrap: wrap;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .info h3 {
+            font-size: 20px;
+            color: #0f172a;
+        }
+
+        .info p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* ===== BUTTON AREA ===== */
+        .actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .view-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .approve {
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .reject {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* ===== EMPTY TEXT ===== */
+        .empty {
+            color: #64748b;
+            margin-bottom: 15px;
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            width: 350px;
+            text-align: center;
+        }
+
+        .modal img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .close {
+            margin-top: 12px;
+            background: #111;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:768px) {
+
+            .container {
+                padding: 20px;
+            }
+
+            .card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .actions {
+                justify-content: flex-start;
+                margin-top: 10px;
+            }
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .header h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <h2>Meditech Super Admin Dashboard</h2>
+        <a href="/logout"><button class="logout">Logout</button></a>
+    </div>
+
+    <div class="container">
+
+        <!-- 🏥 HOSPITAL -->
+        <div class="section-title">Hospital Verification Requests</div>
+
+        <% if(pendingHospitals.length===0){ %>
+            <p class="empty">No pending hospital requests.</p>
+            <% } %>
+
+                <% pendingHospitals.forEach(h=> { %>
+                    <div class="card">
+                        <div class="info">
+                            <h3>
+                                <%= h.name %>
+                            </h3>
+                            <p>
+                                <%= h.email %>
+                            </p>
+                            <p>
+                                <%= h.address %>
+                            </p>
+                            <p><b>Specialization:</b>
+                                <%= h.specilization %>
+                            </p>
+                        </div>
+
+                        <div class="actions">
+                            <button class="view-btn"
+                                onclick="openModal('<%=h.licensephoto%>')">License</button>
+                            <button class="view-btn"
+                                onclick="openModal('<%=h.hospitalimage%>')">Hospital</button>
+
+                            <a href="/admin/approve/<%=h._id%>"><button class="approve">Approve</button></a>
+                            <a href="/admin/reject/<%=h._id%>"><button class="reject">Reject</button></a>
+                        </div>
+                    </div>
+                    <% }) %>
+
+
+                        <!-- 💊 PHARMACY -->
+                        <div class="section-title">Pharmacy Verification Requests</div>
+
+                        <% if(pendingPharmacies.length===0){ %>
+                            <p class="empty">No pending pharmacy requests.</p>
+                            <% } %>
+
+                                <% pendingPharmacies.forEach(p=> { %>
+                                    <div class="card">
+                                        <div class="info">
+                                            <h3>
+                                                <%= p.name %>
+                                            </h3>
+                                            <p>
+                                                <%= p.email %>
+                                            </p>
+                                            <p>
+                                                <%= p.address %>
+                                            </p>
+                                        </div>
+
+                                        <div class="actions">
+                                            <button class="view-btn"
+                                               onclick="openModal('<%=p.licensephoto%>')">License</button>
+                                            <button class="view-btn"
+                                               onclick="openModal('<%=p.shopimage%>')">Shop</button>
+
+                                            <a href="/admin/pharmacy/approve/<%=p._id%>"><button
+                                                    class="approve">Approve</button></a>
+                                            <a href="/admin/pharmacy/reject/<%=p._id%>"><button
+                                                    class="reject">Reject</button></a>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+
+
+                                        <!-- 👨‍⚕️ DOCTOR -->
+                                        <div class="section-title">Doctor Verification Requests</div>
+
+                                        <% if(pendingDoctors.length===0){ %>
+                                            <p class="empty">No pending doctor requests.</p>
+                                            <% } %>
+
+                                                <% pendingDoctors.forEach(d=> { %>
+                                                    <div class="card">
+                                                        <div class="info">
+                                                            <h3>
+                                                                <%= d.name %>
+                                                            </h3>
+                                                            <p>
+                                                                <%= d.email %>
+                                                            </p>
+                                                            <p>
+                                                                <%= d.specialization %>
+                                                            </p>
+                                                            <p>
+                                                                <%= d.degree %>
+                                                            </p>
+                                                        </div>
+
+                                                        <div class="actions">
+                                                            <button class="view-btn"
+                                                                onclick="openModal('<%=d.degreePhoto%>')">Degree</button>
+
+                                                            <a href="/admin/doctor/approve/<%=d._id%>"><button
+                                                                    class="approve">Approve</button></a>
+                                                            <a href="/admin/doctor/reject/<%=d._id%>"><button
+                                                                    class="reject">Reject</button></a>
+                                                        </div>
+                                                    </div>
+                                                    <% }) %>
+
+    </div>
+
+    <!-- IMAGE MODAL -->
+    <div id="imgModal" class="modal">
+        <div class="modal-content">
+            <img id="modalImg" src="">
+            <button class="close" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal(src) {
+            document.getElementById("imgModal").style.display = "flex";
+            document.getElementById("modalImg").src = src;
+        }
+
+        function closeModal() {
+            document.getElementById("imgModal").style.display = "none";
+        }
+
+        window.onclick = function (e) {
+            const modal = document.getElementById("imgModal");
+            if (e.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

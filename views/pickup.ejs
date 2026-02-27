@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pickup Medicine</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f6f9fc, #e9f1ff);
+        }
+
+        /* card */
+        .form-box {
+            width: 420px;
+            background: #fff;
+            padding: 40px 35px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 700;
+            text-align: center;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #374151;
+        }
+
+        .input {
+            height: 42px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            outline: none;
+            font-size: 14px;
+            background: #f9fafb;
+        }
+
+        .input:focus {
+            border-color: #2563eb;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .input[readonly] {
+            background: #f3f4f6;
+            font-weight: 600;
+            color: #111;
+        }
+
+        /* upload */
+        .upload-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .custom-upload {
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        #fileName {
+            font-size: 13px;
+            color: #000;
+        }
+
+        /* button */
+        .form button {
+            margin-top: 10px;
+            height: 46px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        @media(max-width:480px) {
+            .form-box {
+                width: 90%;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-box">
+
+        <form class="form" method="post" action="/pickuporder" enctype="multipart/form-data">
+
+            <span class="title">Pickup Medicine</span>
+
+            <div class="form-container">
+
+                <!-- SHOP -->
+                <div class="input-group">
+                    <label>Medical Store</label>
+                    <input type="text" name="shopname" value="<%= shop %>" readonly class="input">
+                </div>
+
+                <!-- MODE -->
+                <div class="input-group">
+                    <label>Service Type</label>
+                    <input type="text" value="<%= mode %>" readonly class="input">
+                    <input type="hidden" name="mode" value="<%= mode %>">
+                </div>
+
+                <!-- MEDICINE -->
+                <div class="input-group">
+                    <label>Medicine Name</label>
+                    <input type="text" name="medicine" class="input" placeholder="Enter medicine" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Your Name</label>
+                    <input type="text" name="username" class="input" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input type="text" name="phone" class="input" required>
+                </div>
+
+                <!-- QUANTITY -->
+                <div class="input-group">
+                    <label>Quantity</label>
+                    <input type="number" name="quantity" class="input" placeholder="Enter quantity" required>
+                </div>
+
+                <!-- EMAIL -->
+                <div class="input-group">
+                    <label>Your Email</label>
+                    <input type="email" name="useremail" class="input" placeholder="Enter your email" required>
+                </div>
+
+                <!-- PRESCRIPTION -->
+                <div class="input-group">
+                    <label>Upload Prescription</label>
+
+                    <div class="upload-wrapper">
+                        <label for="prescription" class="custom-upload">
+                            <i class="ri-upload-2-line"></i> Upload Prescription
+                        </label>
+                        <span id="fileName">No file chosen</span>
+                    </div>
+
+                    <input type="file" name="prescription" id="prescription" hidden>
+                </div>
+
+            </div>
+
+            <button type="submit">Confirm Order</button>
+        </form>
+    </div>
+
+    <script>
+        // show file name
+        const fileInput = document.getElementById("prescription");
+        const fileName = document.getElementById("fileName");
+
+        fileInput.addEventListener("change", function () {
+            if (this.files.length > 0) {
+                fileName.innerText = this.files[0].name;
+            } else {
+                fileName.innerText = "No file chosen";
+            }
+        });
+    </script>
+
+</body>
+
+</html>

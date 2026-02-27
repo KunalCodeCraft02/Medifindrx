@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Smooch+Sans:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Macondo&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Smooch+Sans:wght@100..900&display=swap');
+
+
+
+@font-face {
+  font-family: ramen;
+  src: url(/assets/ramen.ttf);
+}
+
+@font-face {
+  font-family: futura;
+  src: url(/assets/Futura-Bold.ttf);
+}
+
+@font-face {
+  font-family: gilroy;
+  src: url(/assets/Gilroy-Medium.ttf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  font-family: Roboto;
+  color: black;
+}
+
+main{
+ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-box{
+    width:500px;
+    background:#e4edf7;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.form{
+    display:flex;
+    flex-direction:column;
+    padding:35px 25px;
+    gap:15px;
+    text-align:center;
+}
+
+.title{
+    font-size:28px;
+    font-weight:700;
+}
+
+.subtitle{
+    font-size:15px;
+    color:#555;
+}
+
+.form-container{
+    background:#fff;
+    padding:20px;
+    border-radius:14px;
+    margin-top:15px;
+}
+
+/* input group */
+.input-group{
+    display:flex;
+    flex-direction:column;
+    text-align:left;
+    margin-bottom:14px;
+}
+
+/* attractive label */
+.input-group label{
+    font-size:13px;
+    font-weight:600;
+    color:#333;
+    margin-bottom:6px;
+}
+
+/* normal inputs */
+.input{
+    height:42px;
+    border:1px solid #d6dbe2;
+    border-radius:8px;
+    padding:10px;
+    font-size:14px;
+    transition:0.3s;
+}
+
+.input:focus{
+    border-color:#1e63e9;
+    box-shadow:0 0 0 2px rgba(30,99,233,0.15);
+    outline:none;
+}
+
+/* file input styling */
+.file-input{
+    font-size:13px;
+    padding:6px;
+}
+
+.file-input::file-selector-button{
+    background:#1e63e9;
+    color:#fff;
+    border:none;
+    padding:8px 14px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-right:10px;
+    transition:0.3s;
+}
+
+.file-input::file-selector-button:hover{
+    background:#174fc1;
+}
+
+/* button */
+button{
+    margin-top:18px;
+    background:#1e63e9;
+    color:#fff;
+    border:none;
+    padding:12px;
+    border-radius:25px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#174fc1;
+}
+
+.form-section{
+    background:#dbe6f3;
+    padding:18px;
+    text-align:center;
+    font-size:14px;
+}
+
+.form-section a{
+    color:#1e63e9;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.location-btn{
+background:#0f172a;
+color:#fff;
+border:none;
+padding:10px;
+border-radius:8px;
+cursor:pointer;
+font-size:14px;
+transition:0.3s;
+}
+
+.location-btn:hover{
+background:#1e293b;
+}

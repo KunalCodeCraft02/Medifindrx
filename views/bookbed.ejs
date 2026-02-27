@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Hospital Bed</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff;
+            color: #000;
+        }
+
+        /* main card */
+        .card {
+            width: 420px;
+            background: #fff;
+            padding: 40px 35px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 35px 60px rgba(0, 0, 0, 0.18);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        /* input group */
+        .input-group {
+            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #222;
+        }
+
+        .input {
+            height: 44px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            background: #f9fafb;
+            transition: .3s;
+        }
+
+        .input:focus {
+            border-color: #16a34a;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+            outline: none;
+        }
+
+        /* dropdown */
+        select {
+            height: 44px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 14px;
+            background: #f9fafb;
+            cursor: pointer;
+        }
+
+        select:focus {
+            border-color: #16a34a;
+            background: #fff;
+            outline: none;
+        }
+
+        /* hospital badge */
+        .hospital-box {
+            background: #f3f4f6;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* button */
+        button {
+            width: 100%;
+            margin-top: 10px;
+            background: linear-gradient(90deg, #16a34a, #15803d);
+            color: #fff;
+            border: none;
+            padding: 13px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(22, 163, 74, 0.35);
+        }
+
+        @media(max-width:500px) {
+            .card {
+                width: 92%;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+
+        <div class="title">Book Bed</div>
+        <div class="subtitle">Reserve hospital bed instantly</div>
+
+        <div class="hospital-box">
+            🏥 <%= hospital %>
+        </div>
+
+        <form method="post" action="/bookbed">
+
+            <input type="hidden" name="hospitalName" value="<%= hospital %>">
+
+            <div class="input-group">
+                <label>Your Name</label>
+                <input type="text" name="userName" class="input" placeholder="Enter your name" required>
+            </div>
+
+            <div class="input-group">
+                <label>Your Email</label>
+                <input type="email" name="userEmail" class="input" placeholder="Enter your email" required>
+            </div>
+
+            <div class="input-group">
+                <label>Select Bed Type</label>
+                <select name="bedType">
+                    <option value="ICU">ICU</option>
+                    <option value="General">General Ward</option>
+                    <option value="Special">Special Room</option>
+                </select>
+            </div>
+
+            <button type="submit">Send Request</button>
+
+        </form>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/signin.css">
+    <title>Sign Up</title>
+
+    <style>
+       
+        input[type="date"] {
+            position: relative;
+            background: #fff;
+            color: #111;
+            min-height: 40px;
+        }
+
+       
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        
+        input[type="date"]::before {
+            content: attr(placeholder);
+            color: #777;
+        }
+
+        input[type="date"]:focus::before,
+        input[type="date"]:valid::before {
+            content: "";
+        }
+    </style>
+
+</head>
+
+<body>
+    <main>
+
+        <div class="form-box">
+
+            <form class="form" action="/signin" method="POST">
+
+                <span class="title">Sign up</span>
+                <span class="subtitle">Create a free account with your email.</span>
+
+                <div class="form-container">
+
+                    <input name="name" type="text" class="input" placeholder="Full Name" required>
+
+                    <input name="email" type="email" class="input" placeholder="Email" required>
+
+                    <!-- DOB FIX -->
+                    <input name="dob" type="date" class="input" placeholder="Date of Birth" required>
+
+                    <input name="bloodgroup" type="text" class="input" placeholder="Blood Group" required>
+
+                    <input name="phonenumber" type="number" class="input" placeholder="Phone Number" required>
+
+                    <input name="password" type="password" class="input" placeholder="Password" required>
+
+                    <input name="confirmpassword" type="password" class="input" placeholder="Confirm Password" required>
+
+                </div>
+
+                <button type="submit">Sign up</button>
+
+            </form>
+
+            <div class="form-section">
+                <p>Have an account? <a href="/login">Log in</a></p>
+            </div>
+
+        </div>
+
+    </main>
+</body>
+
+</html>

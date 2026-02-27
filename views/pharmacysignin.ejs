@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/pharmacysignin.css">
+    <title>Pharmacy Signup</title>
+</head>
+
+<body>
+    <main>
+        <div class="form-box">
+
+            <form class="form" method="post" action="/pharmacysignin" enctype="multipart/form-data">
+
+                <span class="title">Pharmacy Sign up</span>
+                <span class="subtitle">Create your pharmacy account</span>
+
+                <div class="form-container">
+
+                    <div class="input-group">
+                        <label>Name Of Pharmacy</label>
+                        <input name="name" type="text" class="input" placeholder="Enter pharmacy name" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input name="email" type="email" class="input" placeholder="Enter email" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Address</label>
+                        <input name="address" type="text" class="input" placeholder="Enter address" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>License Photo</label>
+                        <input name="licensephoto" type="file" class="file-input" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Shop Photo</label>
+                        <input name="shopimage" type="file" class="file-input" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <input name="phonenumber" type="number" class="input" placeholder="Enter phone number" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input name="password" type="password" class="input" placeholder="Enter password" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Confirm Password</label>
+                        <input name="confirmpassword" type="password" class="input" placeholder="Confirm password"
+                            required>
+                    </div>
+
+                    <!-- LOCATION SECTION -->
+                    <div class="input-group">
+                        <label>Shop Location</label>
+
+                        <input type="hidden" name="lat" id="lat">
+                        <input type="hidden" name="lng" id="lng">
+
+                        <button type="button" class="location-btn" onclick="getLocation()">
+                            <i class="ri-map-pin-line"></i> Use Current Shop Location
+                        </button>
+
+                        <small id="locationStatus" style="color:green; margin-top:5px;"></small>
+                    </div>
+
+                </div>
+
+                <button type="submit">Sign up</button>
+
+            </form>
+
+            <div class="form-section">
+                <p>Have an account? <a href="/pharmacylogin">Log in</a></p>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+
+        window.onload = () => {
+
+            if (!navigator.geolocation) {
+                alert("Geolocation not supported");
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                function (pos) {
+
+                    document.getElementById("lat").value = pos.coords.latitude;
+                    document.getElementById("lng").value = pos.coords.longitude;
+
+                    document.getElementById("locationStatus").innerText =
+                        "Shop location captured automatically ";
+
+                },
+                function () {
+                    alert("Allow location access for map & orders");
+                }
+            );
+
+        };
+
+    </script>
+
+</body>
+
+</html>

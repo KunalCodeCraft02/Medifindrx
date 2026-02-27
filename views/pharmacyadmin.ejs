@@ -1,0 +1,420 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
+        <title>Pharmacy Panel</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Poppins', sans-serif;
+            }
+
+            body {
+                background: #f1f5f9;
+            }
+
+            /* HEADER */
+            .header {
+                background: #0f172a;
+                color: white;
+                padding: 18px 40px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .logout {
+                background: #ef4444;
+                border: none;
+                padding: 8px 18px;
+                border-radius: 6px;
+                color: white;
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            /* MAIN */
+            .container {
+                padding: 40px;
+            }
+
+            .section-title {
+                font-size: 26px;
+                font-weight: 700;
+                margin-bottom: 20px;
+                color: #0f172a;
+            }
+
+            /* CARD */
+            .card {
+                background: white;
+                border-radius: 16px;
+                padding: 22px;
+                margin-bottom: 18px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                transition: .3s;
+                gap: 20px;
+            }
+
+            .card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
+            }
+
+            /* INFO */
+            .info h3 {
+                font-size: 18px;
+                color: #0f172a;
+            }
+
+            .info p {
+                color: #64748b;
+                font-size: 14px;
+                margin-top: 4px;
+            }
+
+            /* STATUS */
+            .status {
+                padding: 4px 10px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 600;
+            }
+
+            .pending {
+                background: #facc15;
+                color: #000;
+            }
+
+            .approved {
+                background: #22c55e;
+                color: #fff;
+            }
+
+            .rejected {
+                background: #ef4444;
+                color: #fff;
+            }
+
+            .completed {
+                background: #3b82f6;
+                color: #fff;
+            }
+
+            .timeout {
+                background: #6b7280;
+                color: #fff;
+            }
+
+            .timer {
+                font-size: 12px;
+                color: #ef4444;
+                font-weight: 600;
+                margin-top: 5px;
+            }
+
+            /* ACTIONS */
+            .actions {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .view-btn {
+                background: #3b82f6;
+                color: white;
+                border: none;
+                padding: 8px 14px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 13px;
+            }
+
+            .approve {
+                background: #16a34a;
+                color: white;
+                border: none;
+                padding: 9px 16px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            .reject {
+                background: #ef4444;
+                color: white;
+                border: none;
+                padding: 9px 16px;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            .otpbtn {
+                background: #111827;
+                color: white;
+                border: none;
+                padding: 8px 14px;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+
+            .otpbox {
+                display: flex;
+                gap: 6px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
+            .otpbox input {
+                padding: 6px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                width: 100px;
+            }
+
+            /* MODAL */
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            }
+
+            .modal-content {
+                background: white;
+                padding: 20px;
+                border-radius: 12px;
+                width: 350px;
+                max-width: 90%;
+                text-align: center;
+            }
+
+            .modal img {
+                width: 100%;
+                border-radius: 10px;
+            }
+
+
+            @media(max-width:900px) {
+                .card {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+
+                .actions {
+                    width: 100%;
+                    justify-content: flex-start;
+                    margin-top: 10px;
+                }
+            }
+
+            @media(max-width:600px) {
+
+                .header {
+                    padding: 15px 20px;
+                }
+
+                .header h2 {
+                    font-size: 18px;
+                }
+
+                .container {
+                    padding: 20px;
+                }
+
+                .section-title {
+                    font-size: 22px;
+                }
+
+                .card {
+                    padding: 18px;
+                }
+
+                .info h3 {
+                    font-size: 16px;
+                }
+
+                .otpbox input {
+                    width: 100%;
+                }
+
+                .otpbox {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+
+                .approve,
+                .reject,
+                .view-btn,
+                .otpbtn {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="header">
+            <h2>Pharmacy Admin Panel</h2>
+            <a href="/logout"><button class="logout">Logout</button></a>
+        </div>
+
+        <div class="container">
+            <div class="section-title">Medicine Orders</div>
+
+            <% if(orders.length===0){ %>
+                <p>No orders yet</p>
+                <% } %>
+
+                    <% orders.forEach(o=> { %>
+
+                        <div class="card">
+                            <div class="info">
+                                <h3><i class="ri-store-line"></i>
+                                    <%= o.shopname %>
+                                </h3>
+                                <p><b>Customer:</b>
+                                    <%= o.username || "Not provided" %>
+                                </p>
+                                <p><b>Contact:</b>
+                                    <%= o.phone || "Not provided" %>
+                                </p>
+
+                                <p><i class="ri-capsule-fill"></i> Medicine: <b>
+                                        <%= o.medicine %>
+                                    </b></p>
+                                <p><i class="ri-file-list-line"></i> Quantity: <%= o.quantity %>
+                                </p>
+                                <p><i class="ri-file-list-line"></i> Quantity: <%= o.quantity %>
+                                </p>
+
+                                <p>
+                                    Status:
+                                    <span class="status <%=o.status%>">
+                                        <%=o.status%>
+                                    </span>
+                                </p>
+
+                                <% if(o.status==="pending" ){ %>
+                                    <div class="timer" data-created="<%=o.createdAt%>"></div>
+                                    <% } %>
+
+                                        <% if(o.status==="timeout" ){ %>
+                                            <p style="color:red;font-weight:700;">No Response </p>
+                                            <% } %>
+
+                                                <% if(o.status==="approved" ){ %>
+                                                    <p style="color:green;font-weight:600;">OTP sent to customer</p>
+                                                    <% } %>
+
+                            </div>
+
+                            <div class="actions">
+
+                                <% if(o.prescription){ %>
+                                    <button class="view-btn" onclick="openModal('<%= o.prescription %>')">
+                                        View Rx
+                                    </button>
+                                    <% } %>
+
+                                        <% if(o.status==="pending" ){ %>
+                                            <a href="/order/approve/<%=o._id%>">
+                                                <button class="approve">Approve</button>
+                                            </a>
+
+                                            <a href="/order/reject/<%=o._id%>">
+                                                <button class="reject">Reject</button>
+                                            </a>
+                                            <% } %>
+
+                                                <% if(o.status==="approved" ){ %>
+                                                    <form action="/verifyotp" method="post" class="otpbox">
+                                                        <input type="hidden" name="orderid" value="<%=o._id%>">
+                                                        <input type="text" name="otp" placeholder="Enter OTP">
+                                                        <button class="otpbtn">Verify</button>
+                                                    </form>
+                                                    <% } %>
+
+                                                        <% if(o.status==="completed" ){ %>
+                                                            <span style="color:green;font-weight:700;">✔ Delivered</span>
+                                                            <% } %>
+
+                            </div>
+                        </div>
+
+                        <% }) %>
+
+        </div>
+
+        <!-- IMAGE MODAL -->
+        <div id="imgModal" class="modal">
+            <div class="modal-content">
+                <img id="modalImg" src="">
+                <br><br>
+                <button onclick="closeModal()">Close</button>
+            </div>
+        </div>
+
+        <script>
+
+
+            function openModal(src) {
+                document.getElementById("imgModal").style.display = "flex";
+                document.getElementById("modalImg").src = src;
+            }
+            function closeModal() {
+                document.getElementById("imgModal").style.display = "none";
+            }
+
+
+            document.querySelectorAll("[data-created]").forEach(el => {
+
+                let created = new Date(el.getAttribute("data-created")).getTime();
+
+                let x = setInterval(function () {
+
+                    let now = new Date().getTime();
+                    let diff = 90 - Math.floor((now - created) / 1000);
+
+                    if (diff <= 0) {
+                        clearInterval(x);
+                        el.innerHTML = "No Response ❌";
+                    } else {
+                        el.innerHTML = "Respond in: " + diff + "s";
+                    }
+
+                }, 1000);
+
+            });
+
+
+            setInterval(() => {
+                location.reload();
+            }, 10000);
+
+        </script>
+
+    </body>
+
+    </html>

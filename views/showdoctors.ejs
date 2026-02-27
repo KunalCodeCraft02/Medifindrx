@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Book Doctor Appointment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#eef2f7;
+min-height:100vh;
+}
+
+/* TITLE */
+.header{
+text-align:center;
+font-size:38px;
+font-weight:700;
+padding:40px 20px 10px;
+color:#0f172a;
+}
+
+/* WRAPPER */
+.wrapper{
+width:95%;
+max-width:1400px;
+margin:auto;
+}
+
+/* GRID */
+.container{
+margin-top:40px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:30px;
+padding-bottom:60px;
+}
+
+/* CARD */
+.card{
+background:white;
+border-radius:20px;
+padding:28px;
+box-shadow:0 15px 35px rgba(0,0,0,.08);
+transition:.3s;
+border:1px solid #eee;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 25px 50px rgba(0,0,0,.12);
+}
+
+/* NAME */
+.name{
+font-size:22px;
+font-weight:700;
+color:#0f172a;
+margin-bottom:6px;
+}
+
+/* SPECIALIZATION */
+.spec{
+color:#16a34a;
+font-weight:600;
+margin-bottom:14px;
+font-size:15px;
+}
+
+/* INFO */
+.info{
+color:#475569;
+font-size:15px;
+margin-bottom:6px;
+}
+
+/* BUTTON */
+.btn{
+margin-top:18px;
+background:#065f46;
+color:white;
+border:none;
+padding:12px;
+border-radius:12px;
+cursor:pointer;
+font-weight:600;
+font-size:15px;
+transition:.2s;
+width:100%;
+}
+
+.btn:hover{
+background:#064e3b;
+}
+
+/* EMPTY */
+.empty{
+text-align:center;
+margin-top:60px;
+font-size:20px;
+color:#64748b;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+.header{
+font-size:26px;
+padding-top:25px;
+}
+.card{
+padding:22px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">Book Doctor Appointment</div>
+
+<div class="wrapper">
+<div class="container" id="doctors"></div>
+</div>
+
+<script>
+async function loadDoctors(){
+
+const res = await fetch("/get-doctors");
+const doctors = await res.json();
+
+const div = document.getElementById("doctors");
+
+if(doctors.length === 0){
+div.innerHTML = "<div class='empty'>No doctors available</div>";
+return;
+}
+
+doctors.forEach(d=>{
+
+div.innerHTML += `
+<div class="card">
+
+<div>
+<div class="name">Dr. ${d.name}</div>
+<div class="spec">${d.specialization}</div>
+
+<div class="info">Experience: ${d.experience || "Not mentioned"} years</div>
+<div class="info">Fees: ₹${d.fees || "300"}</div>
+<div class="info">Timings: ${d.workingTime || "Not mentioned"}</div>
+</div>
+
+<a href="/book-appointment/${d._id}">
+<button class="btn">Book Appointment</button>
+</a>
+
+</div>
+`;
+});
+}
+
+loadDoctors();
+</script>
+
+</body>
+</html>
