@@ -822,6 +822,14 @@ padding:30px;
     display: none;
   }
 
+  .logo{
+    display: flex;
+    align-items: center;
+    gap: 3.2vw;
+    font-family: gilroy;
+    font-size: 1.2rem;
+  }
+
   /* 
   #fixed{
       display: block;
