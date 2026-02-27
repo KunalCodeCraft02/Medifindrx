@@ -242,35 +242,35 @@ app.get("/pharmacyadmin", async (req, res) => {
 app.get("/order/approve/:id", async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
-
     if (!order) return res.send("Order not found");
 
-    // ⭐ MAKE OTP STRING
     const otp = Math.floor(1000 + Math.random() * 9000).toString();
 
     order.status = "approved";
     order.otp = otp;
-
     await order.save();
 
-    console.log("OTP SAVED IN DB:", otp);   // DEBUG
+    console.log("OTP SAVED IN DB:", otp);
 
+    // SEND MAIL CORRECT
     sendMail(
-      booking.userEmail,
-      "Bed Confirmed",
-      `<h2>Bed Confirmed</h2>
-   <p>Hospital: ${booking.hospitalName}</p>
-   <h3>OTP: ${otp}</h3>`
+      order.useremail,
+      "Medicine Ready for Pickup",
+      `
+      <h2>Medicine Ready for Pickup</h2>
+      <p>Store: ${order.shopname}</p>
+      <p>Medicine: ${order.medicine}</p>
+      <h3>Your OTP: ${otp}</h3>
+      `
     );
 
     res.redirect("/pharmacyadmin");
 
   } catch (err) {
-    console.log(err);
+    console.log("PHARMACY APPROVE ERROR:", err);
     res.send("Approve error");
   }
 });
-
 app.get("/order/reject/:id", async (req, res) => {
   await Order.findByIdAndUpdate(req.params.id, { status: "rejected" });
   res.redirect("/pharmacyadmin");
@@ -519,7 +519,7 @@ app.get("/bed/approve/:id", async (req, res) => {
   `<h2>Bed Confirmed</h2>
    <p>Hospital: ${booking.hospitalName}</p>
    <h3>OTP: ${otp}</h3>`
-);
+);``
 
   res.redirect("/hospitaladmin");
 });
