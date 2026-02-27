@@ -9,7 +9,7 @@ const Hospital = require("./models/hospital");
 const Pharmacy = require("./models/pharmacy");
 const Order = require("./models/order");
 const middleware = require("./middleware/auth");
-const nodemailer = require("nodemailer")
+// const nodemailer = require("nodemailer")
 const pharmacyAuth = require("./middleware/pharmacyAuth");
 const User = require("./models/user");
 const BedBooking = require("./models/bedBooking");
@@ -19,6 +19,10 @@ const Appointment = require("./models/appointment");
 const doctorAuth = require("./middleware/doctorAuth");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const axios = require("axios");
+
+
+
 
 
 app.use(cookieParser());
@@ -26,6 +30,37 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set("view engine", "ejs");
+
+
+// ===== BREVO MAIL FUNCTION (WORKS ON RENDER) =====
+async function sendMail(to, subject, html) {
+  try {
+
+    const response = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "MediFindRx",
+          email: "hyperboy022@gmail.com"
+        },
+        to: [{ email: to }],
+        subject: subject,
+        htmlContent: html
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    console.log("MAIL SENT SUCCESS:", response.data);
+
+  } catch (err) {
+    console.log("MAIL ERROR FULL:", err.response?.data || err.message);
+  }
+}
 
 
 app.get("/", (req, res) => {
@@ -220,12 +255,13 @@ app.get("/order/approve/:id", async (req, res) => {
 
     console.log("OTP SAVED IN DB:", otp);   // DEBUG
 
-    await transporter.sendMail({
-      from: "MediFindRx <hyperboy022@gmail.com>",
-      to: order.useremail,
-      subject: "Medicine Ready for Pickup",
-      html: `<h2>Your OTP: ${otp}</h2>`
-    });
+    sendMail(
+      booking.userEmail,
+      "Bed Confirmed",
+      `<h2>Bed Confirmed</h2>
+   <p>Hospital: ${booking.hospitalName}</p>
+   <h3>OTP: ${otp}</h3>`
+    );
 
     res.redirect("/pharmacyadmin");
 
@@ -414,15 +450,7 @@ app.get("/get-pharmacy", async (req, res) => {
   }
 });
 
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.USER,
-    pass: process.env.PASS
-  }
-});
+
 
 
 
@@ -485,14 +513,13 @@ app.get("/bed/approve/:id", async (req, res) => {
 
 
 
-  await transporter.sendMail({
-    from: "MediFindRx <hyperboy022@gmail.com>",
-    to: booking.userEmail,
-    subject: "Bed Confirmed",
-    html: `<h2>Bed Confirmed</h2>
-      <p>Hospital: ${booking.hospitalName}</p>
-      <h3>OTP: ${otp}</h3>`
-  });
+ sendMail(
+  booking.userEmail,
+  "Bed Confirmed",
+  `<h2>Bed Confirmed</h2>
+   <p>Hospital: ${booking.hospitalName}</p>
+   <h3>OTP: ${otp}</h3>`
+);
 
   res.redirect("/hospitaladmin");
 });
@@ -663,21 +690,13 @@ app.get("/doctor/approve/:id", async (req, res) => {
 
     console.log("OTP SAVED:", otp);
 
-    // SEND EMAIL IN BACKGROUND (NO STUCK)
-    transporter.sendMail({
-      from: "MediFindRx <hyperboy022@gmail.com>",
-      to: ap.userEmail,
-      subject: "Appointment Confirmed",
-      html: `
-      <h2>Appointment Confirmed</h2>
-      <p>Doctor: ${ap.doctorName}</p>
-      <h3>Your OTP: ${otp}</h3>
-      `
-    }).then(() => {
-      console.log("Email sent successfully");
-    }).catch(err => {
-      console.log("MAIL ERROR:", err);
-    });
+    sendMail(
+      ap.userEmail,
+      "Appointment Confirmed",
+      `<h2>Appointment Confirmed</h2>
+   <p>Doctor: ${ap.doctorName}</p>
+   <h3>Your OTP: ${otp}</h3>`
+    );
 
     //  REDIRECT INSTANT (DON'T WAIT FOR MAIL)
     res.redirect("/admindoctor");
