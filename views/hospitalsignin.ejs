@@ -1,242 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hospital Sign Up</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Sign Up</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Poppins
+        }
 
-body{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#f0f4ff,#e6efff);
-}
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f0f4ff, #e6efff);
+        }
 
-.form-box{
-width:520px;
-background:#fff;
-border-radius:20px;
-box-shadow:0 25px 50px rgba(0,0,0,.08);
-overflow:hidden;
-}
+        .form-box {
+            width: 520px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, .08);
+            overflow: hidden;
+        }
 
-.form{padding:40px 30px;display:flex;flex-direction:column;gap:18px}
+        .form {
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px
+        }
 
-.title{font-size:26px;font-weight:700;text-align:center}
-.subtitle{text-align:center;font-size:14px;color:#666}
+        .title {
+            font-size: 26px;
+            font-weight: 700;
+            text-align: center
+        }
 
-.form-container{margin-top:10px;display:flex;flex-direction:column;gap:14px}
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #666
+        }
 
-.input-group{display:flex;flex-direction:column}
-.input-group label{font-size:13px;font-weight:600;margin-bottom:6px;color:#333}
+        .form-container {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px
+        }
 
-.input{
-height:42px;
-border:1px solid #e5e7eb;
-border-radius:10px;
-padding:10px 14px;
-font-size:14px;
-background:#f9fafb;
-}
+        .input-group {
+            display: flex;
+            flex-direction: column
+        }
 
-.file-input::file-selector-button{
-background:#2563eb;color:white;border:none;
-padding:8px 14px;border-radius:8px;cursor:pointer;margin-right:10px;
-}
+        .input-group label {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #333
+        }
 
-.price-box{
-background:#f3f6ff;padding:15px;border-radius:12px;margin-top:10px;
-}
+        .input {
+            height: 42px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 14px;
+            background: #f9fafb;
+        }
 
-.price-title{font-size:14px;font-weight:600;margin-bottom:10px}
+        .file-input::file-selector-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
 
-.location-btn{
-background:#0f172a;color:white;border:none;
-padding:11px;border-radius:8px;cursor:pointer;font-size:14px;
-}
+        .price-box {
+            background: #f3f6ff;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 10px;
+        }
 
-.status{
-font-size:13px;
-font-weight:600;
-color:#2563eb;
-margin-top:5px;
-}
+        .price-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px
+        }
 
-button[type="submit"]{
-margin-top:15px;
-background:linear-gradient(90deg,#2563eb,#1d4ed8);
-color:white;border:none;padding:12px;border-radius:25px;
-font-size:16px;font-weight:600;cursor:pointer;
-}
+        .location-btn {
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
 
-@media(max-width:600px){
-.form-box{width:95%}
-}
-</style>
+        .status {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2563eb;
+            margin-top: 5px;
+        }
+
+        button[type="submit"] {
+            margin-top: 15px;
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        @media(max-width:600px) {
+            .form-box {
+                width: 95%
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="form-box">
-<form class="form" action="/hospitalsignin" method="POST" enctype="multipart/form-data" onsubmit="return checkLocation()">
+    <div class="form-box">
+        <form class="form" action="/hospitalsignin" method="POST" enctype="multipart/form-data"
+            onsubmit="return checkLocation()">
 
-<span class="title">Hospital Sign Up</span>
-<span class="subtitle">Register hospital with location & bed prices</span>
+            <span class="title">Hospital Sign Up</span>
+            <span class="subtitle">Register hospital with location & bed prices</span>
 
-<div class="form-container">
+            <div class="form-container">
 
-<input type="hidden" name="lat" id="lat">
-<input type="hidden" name="lng" id="lng">
+                <input type="hidden" name="lat" id="lat">
+                <input type="hidden" name="lng" id="lng">
 
-<div class="input-group">
-<label>Hospital Name</label>
-<input name="name" type="text" class="input" required>
-</div>
+                <div class="input-group">
+                    <label>Hospital Name</label>
+                    <input name="name" type="text" class="input" required>
+                </div>
 
-<div class="input-group">
-<label>Specialization</label>
-<input name="specilization" type="text" class="input" required>
-</div>
+                <div class="input-group">
+                    <label>Specialization</label>
+                    <input name="specilization" type="text" class="input" required>
+                </div>
 
-<div class="input-group">
-<label>Email</label>
-<input name="email" type="email" class="input" required>
-</div>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input name="email" type="email" class="input" required>
+                </div>
 
-<div class="input-group">
-<label>Address</label>
-<input name="address" type="text" class="input" required>
-</div>
+                <div class="input-group">
+                    <label>Address</label>
+                    <input name="address" type="text" class="input" required>
+                </div>
 
-<div class="input-group">
-<label>Phone Number</label>
-<input name="phonenumber" type="text" class="input" required>
-</div>
+                <div class="input-group">
+                    <label>Phone Number</label>
+                    <input name="phonenumber" type="tel" class="input" pattern="[0-9]{10}" maxlength="10" required>
+                </div>
 
-<div class="input-group">
-<label>Password</label>
-<input name="password" type="password" class="input" required>
-</div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input name="password" type="password" class="input" required>
+                </div>
 
-<div class="input-group">
-<label>Confirm Password</label>
-<input name="confirmpassword" type="password" class="input" required>
-</div>
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    <input name="confirmpassword" type="password" class="input" required>
+                </div>
 
-<div class="input-group">
-<label>License Photo</label>
-<input name="licensephoto" type="file" class="file-input" required>
-</div>
+                <div class="input-group">
+                    <label>License Photo</label>
+                    <input name="licensephoto" type="file" class="file-input" required>
+                </div>
 
-<div class="input-group">
-<label>Hospital Image</label>
-<input name="hospitalimage" type="file" class="file-input" required>
-</div>
+                <div class="input-group">
+                    <label>Hospital Image</label>
+                    <input name="hospitalimage" type="file" class="file-input" required>
+                </div>
 
-<!-- LOCATION BUTTON -->
-<button type="button" class="location-btn" onclick="getLocation()">
-📍 Get Current Location
-</button>
+                <!-- LOCATION BUTTON -->
+                <button type="button" class="location-btn" onclick="getLocation()">
+                    📍 Get Current Location
+                </button>
 
-<div class="status" id="locStatus">Location not fetched</div>
+                <div class="status" id="locStatus">Location not fetched</div>
 
-<!-- PRICE -->
-<div class="price-box">
-<div class="price-title">Bed Prices (Per Day)</div>
+                <!-- PRICE -->
+                <div class="price-box">
+                    <div class="price-title">Bed Prices (Per Day)</div>
 
-<div class="input-group">
-<label>ICU Price</label>
-<input name="icuPrice" type="number" class="input" required>
-</div>
+                    <div class="input-group">
+                        <label>ICU Price</label>
+                        <input name="icuPrice" type="number" class="input" required>
+                    </div>
 
-<div class="input-group">
-<label>General Ward Price</label>
-<input name="generalPrice" type="number" class="input" required>
-</div>
+                    <div class="input-group">
+                        <label>General Ward Price</label>
+                        <input name="generalPrice" type="number" class="input" required>
+                    </div>
 
-<div class="input-group">
-<label>Special Room Price</label>
-<input name="specialPrice" type="number" class="input" required>
-</div>
+                    <div class="input-group">
+                        <label>Special Room Price</label>
+                        <input name="specialPrice" type="number" class="input" required>
+                    </div>
 
-</div>
-</div>
+                </div>
+            </div>
 
-<button type="submit">Register Hospital</button>
-</form>
+            <button type="submit">Register Hospital</button>
+        </form>
 
-<div style="padding:18px;text-align:center;font-size:14px;background:#f1f5ff">
-Have an account? <a href="/hospitallogin">Login</a>
-</div>
+        <div style="padding:18px;text-align:center;font-size:14px;background:#f1f5ff">
+            Have an account? <a href="/hospitallogin">Login</a>
+        </div>
 
-</div>
+    </div>
 
-<script>
+    <script>
 
-let locationFetched = false;
+        let locationFetched = false;
 
-function getLocation() {
+        function getLocation() {
 
-    const btn = document.querySelector(".location-btn");
-    btn.innerHTML = "📍 Fetching location...";
-    btn.style.background = "#444";
+            const btn = document.querySelector(".location-btn");
+            btn.innerHTML = "📍 Fetching location...";
+            btn.style.background = "#444";
 
-    if (!navigator.geolocation) {
-        alert("Geolocation not supported in your browser");
-        btn.innerHTML = "📍 Try Again";
-        return;
-    }
+            if (!navigator.geolocation) {
+                alert("Geolocation not supported in your browser");
+                btn.innerHTML = "📍 Try Again";
+                return;
+            }
 
-    navigator.geolocation.getCurrentPosition(
-        function(position) {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
 
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
 
-            document.getElementById("lat").value = lat;
-            document.getElementById("lng").value = lng;
+                    document.getElementById("lat").value = lat;
+                    document.getElementById("lng").value = lng;
 
-            locationFetched = true;
+                    locationFetched = true;
 
-            btn.innerHTML = "Location Captured";
-            btn.style.background = "green";
+                    btn.innerHTML = "Location Captured";
+                    btn.style.background = "green";
 
-        },
-        function(error) {
+                },
+                function (error) {
 
-            alert(" Location failed. Please enable GPS & allow permission.");
+                    alert(" Location failed. Please enable GPS & allow permission.");
 
-            btn.innerHTML = "📍 Try Again";
-            btn.style.background = "#0f172a";
+                    btn.innerHTML = "📍 Try Again";
+                    btn.style.background = "#0f172a";
 
-            console.log(error);
-        },
-        {
-            enableHighAccuracy: true,
-            timeout: 15000,
-            maximumAge: 0
+                    console.log(error);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 15000,
+                    maximumAge: 0
+                }
+            );
         }
-    );
-}
 
 
-// 🚀 PREVENT SUBMIT WITHOUT LOCATION
-document.querySelector("form").addEventListener("submit", function(e){
+        // 🚀 PREVENT SUBMIT WITHOUT LOCATION
+        document.querySelector("form").addEventListener("submit", function (e) {
 
-    if(!locationFetched){
-        e.preventDefault();
-        alert("⚠️ Please click 'Get Current Location' first");
-    }
+            if (!locationFetched) {
+                e.preventDefault();
+                alert("⚠️ Please click 'Get Current Location' first");
+            }
 
-});
+        });
 
-</script>
+    </script>
 
 </body>
+
 </html>
